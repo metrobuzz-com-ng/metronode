@@ -6,35 +6,46 @@ const { spawnSync } = require("child_process");
 const { rmSync } = require("fs");
 const { join } = require("path");
 const { getPackageVersion } = require("./getPackageVersion");
+const { isValidProjectName, isValidDestinationPath } = require("./validators");
+const { constants } = require("./constants");
 
 (async () => {
   try {
     const packageVersion = await getPackageVersion();
-    program.version(packageVersion || "1.0.0");
+    program.version(packageVersion || constants.DEFAULTS.PACKAGE_VERSION);
   } catch (error) {
-    console.log(
-      chalk.redBright(`Creating new project "${projectName}" at ${destination}`)
-    );
     program.version("null");
   }
 
   program
     .command("new")
-    .description("Create a new project")
-    .requiredOption("--project-name <name>", "Specify the project name")
-    .requiredOption("--destination <path>", "Specify the destination directory")
+    .description(constants.COMMAND_STREAMS.CREATE_PROJECT)
+    .requiredOption(
+      constants.EXPECTED_ARGUMENTS.PROJECT_NAME,
+      constants.COMMAND_STREAMS.SPECIFY_PROJECT_NAME
+    )
+    .requiredOption(
+      constants.EXPECTED_ARGUMENTS.DESTINATION,
+      constants.COMMAND_STREAMS.SPECIFY_DESTINATION
+    )
     .action(({ projectName, destination }) => {
+      if (!isValidProjectName(projectName)) {
+        console.error(chalk.red(constants.ERRORS.INVALID_PROJECT_NAME()));
+        return;
+      }
+
+      if (!isValidDestinationPath(destination)) {
+        console.error(chalk.red(constants.ERRORS.INVALID_DESTINATION_PATH()));
+        return;
+      }
+
       console.log(
-        chalk.green(`Creating new project "${projectName}" at ${destination}`)
+        chalk.green(constants.LOGS.CREATING_PROJECT(projectName, destination))
       );
 
       const result = spawnSync(
         "git",
-        [
-          "clone",
-          "https://github.com/metrobuzz-com-ng/nodejs-starter-project.git",
-          projectName,
-        ],
+        ["clone", constants.DEFAULTS.STARTER_PROJECT_GIT_URL, projectName],
         {
           cwd: destination,
           stdio: "inherit",
@@ -43,29 +54,27 @@ const { getPackageVersion } = require("./getPackageVersion");
 
       if (result.status === 0) {
         console.log(
-          chalk.green(`Project "${projectName}" created successfully!`)
+          chalk.green(constants.LOGS.CREATION_SUCCESSFUL(projectName))
         );
 
         //This will help to remove the git directory of the starter project to enable users to create their own
         const projectPath = join(destination, projectName);
 
-        rmSync(join(projectPath, ".git"), { recursive: true });
+        rmSync(join(projectPath, constants.DEFAULTS.GIT_FOLDER), {
+          recursive: true,
+        });
       } else {
-        console.error(
-          chalk.red(
-            `Error creating project: ${result.error || "Unknown error"}`
-          )
-        );
+        console.error(chalk.red(constants.ERRORS.DEFAULT(result.error)));
       }
     });
 
   // Adds help information when a valid command is not entered
-  program.on("command:*", () => {
-    console.error(chalk.red(`Invalid command: ${program.args.join(" ")}`));
-    console.log(chalk.yellow("Available commands:"));
-    console.log(chalk.yellow("- new       Create a new project"));
-    program.help();
-  });
+  // program.on("command:*", () => {
+  //   console.error(chalk.red(`Invalid command: ${program.args.join(" ")}`));
+  //   console.log(chalk.yellow("Available commands:"));
+  //   console.log(chalk.yellow("- new       Create a new project"));
+  //   program.help();
+  // });
 
   // Initiate command line arguments parsing
   program.parse(process.argv);
