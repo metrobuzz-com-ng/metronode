@@ -3,6 +3,10 @@
   "version": "0.0.1-beta",
   "description": "CLI tool for creating node projects quicker",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metrobuzz-com-ng/metronode.git"
+  },
   "bin": {
     "metronode": "./index.js"
   },
