@@ -1,5 +1,5 @@
 {
-  "name": "metronode-cli",
+  "name": "@metrobuzz/cli",
   "version": "0.0.2-beta",
   "description": "CLI tool for creating node projects quicker",
   "main": "index.js",
