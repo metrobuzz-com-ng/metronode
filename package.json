@@ -1,0 +1,18 @@
+{
+  "name": "metronode-cli",
+  "version": "0.0.1",
+  "description": "CLI tool for creating node projects quicker",
+  "main": "index.js",
+  "bin": {
+    "metronode": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^8.3.0",
+    "chalk": "^4.1.2"
+  }
+}
