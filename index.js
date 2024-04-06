@@ -23,29 +23,26 @@ const {
   }
 
   program
-    .command(constants.COMMANDS.NEW)
+    .command(`${constants.COMMANDS.NEW} [projectName]`)
     .description(constants.COMMAND_STREAMS.CREATE_PROJECT)
-    .requiredOption(
-      constants.EXPECTED_ARGUMENTS.PROJECT_NAME,
-      constants.COMMAND_STREAMS.SPECIFY_PROJECT_NAME
-    )
-    .requiredOption(
+    .option(
       constants.EXPECTED_ARGUMENTS.DESTINATION,
-      constants.COMMAND_STREAMS.SPECIFY_DESTINATION
+      constants.COMMAND_STREAMS.SPECIFY_DESTINATION,
+      "./"
     )
     .option(
       constants.EXPECTED_ARGUMENTS.VERBOSE,
       constants.COMMAND_STREAMS.SHOW_VERBOSE_OUTPUT
     )
-    .action(async ({ projectName, destination, verbose }) => {
-      if (!isValidProjectName(projectName)) {
+    .action(async (projectName, { destination, verbose }) => {
+      if (!projectName || !isValidProjectName(projectName)) {
         console.error(chalk.red(constants.ERRORS.INVALID_PROJECT_NAME()));
-        process.exit(1);
+        program.help();
       }
 
       if (!isValidDestinationPath(destination)) {
         console.error(chalk.red(constants.ERRORS.INVALID_DESTINATION_PATH()));
-        process.exit(1);
+        program.help();
       }
 
       const projectPath = join(destination, projectName);
