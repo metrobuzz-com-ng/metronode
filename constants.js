@@ -12,23 +12,42 @@ const constants = {
       "Invalid project name. Project name must contain only letters, numbers, and underscores.",
     INVALID_DESTINATION_PATH: () =>
       "Invalid destination path. Please specify a valid existing directory.",
+    PACKAGE_VERSION_RETRIEVAL: (error) =>
+      `Error retrieving package version: ${error}`,
+    UNABLE_TO_GENERATE: (errorMessage) =>
+      `Unable to generate project: ${errorMessage}`,
+    UNABLE_TO_INSTALL_DEPS: (errorMessage) =>
+      `Unable to install dependencies: ${errorMessage}`,
+    CREATE_PROJECT_ERROR: (errorMessage) =>
+      `Error creating project: ${errorMessage}`,
   },
   LOGS: {
     CREATING_PROJECT: (projectName, destination) =>
-      `Creating new project "${projectName}" at ${destination}`,
+      `Created new project "${projectName}" at ${destination}`,
     CREATION_SUCCESSFUL: (projectName) =>
       `Project "${projectName}" created successfully!`,
+    GENERATING_PROJECT: (projectName) =>
+      `Generating project '${projectName}'...`,
+    INSTALLING_DEPENDENCIES: () => `Installing dependencies...`,
   },
   COMMAND_STREAMS: {
     CREATE_PROJECT: "Create a new project",
     SPECIFY_PROJECT_NAME: "Specify the project name",
     SPECIFY_DESTINATION: "Specify the destination directory",
+    SHOW_VERBOSE_OUTPUT: "Show verbose output",
   },
   EXPECTED_ARGUMENTS: {
     PROJECT_NAME: "--project-name <name>",
     DESTINATION: "--destination <path>",
+    VERBOSE: "-v, --verbose",
   },
-  COMMANDS: {},
+  COMMANDS: {
+    NEW: "new",
+  },
+  STDIO: {
+    INHERIT: "inherit",
+    IGNORE: "ignore",
+  },
 };
 
 module.exports = {

@@ -12,7 +12,7 @@ metronode new --project-name <<projectname>> --destination <<destinantion>>
 
 ### Validation
 
-Your project name must meet the following standard
+Your project name must meet the following naming standard
 
 1. Use letters
 2. Not contain random symbols (but it can include an underscore)
