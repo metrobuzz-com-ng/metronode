@@ -8,7 +8,7 @@
     "url": "https://github.com/metrobuzz-com-ng/metronode.git"
   },
   "bin": {
-    "metronode": "./index.js"
+    "metrocli": "./index.js"
   },
   "scripts": {
     "test": "echo \"No tests specified\" && exit 0"
