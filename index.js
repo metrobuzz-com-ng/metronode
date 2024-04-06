@@ -68,14 +68,6 @@ const { constants } = require("./constants");
       }
     });
 
-  // Adds help information when a valid command is not entered
-  // program.on("command:*", () => {
-  //   console.error(chalk.red(`Invalid command: ${program.args.join(" ")}`));
-  //   console.log(chalk.yellow("Available commands:"));
-  //   console.log(chalk.yellow("- new       Create a new project"));
-  //   program.help();
-  // });
-
   // Initiate command line arguments parsing
   program.parse(process.argv);
 })();
