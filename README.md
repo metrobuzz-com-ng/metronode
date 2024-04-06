@@ -20,6 +20,8 @@ Your project name must meet the following standard
 
 #### Sample Project Names
 
-`js
-    test_project projectToday project
-`
+```js
+test_project;
+projectToday;
+project;
+```
