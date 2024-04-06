@@ -1,4 +1,4 @@
-# Metronode Command Utility
+# Metronode Command Line Utility
 
 We built this cli to help generate node apps using the app standard we find to greatly improve our productivity. The project is based on typescript and nodejs environments.
 
@@ -6,9 +6,11 @@ We built this cli to help generate node apps using the app standard we find to g
 
 ```bash
 
-metronode new --project-name <<projectname>> --destination <<destinantion>>
+metronode new <<projectname>> --destination <<destination>>
 
 ```
+
+<<projectname>> refers to a unique string to use to name the project you want to create
 
 ### Validation
 
