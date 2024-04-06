@@ -1,27 +1,22 @@
-const fs = require("fs");
+const fs = require("fs").promises;
 
 // Define the path to your package.json file
 const packageJsonPath = "./package.json";
 
-const getPackageVersion = () => {
+const getPackageVersion = async () => {
   let packageVersion = "1";
 
-  fs.readFile(packageJsonPath, "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading package.json:", err);
-      return;
-    }
+  try {
+    const data = await fs.readFile(packageJsonPath, "utf8");
 
-    try {
-      // Parse package.json data as JSON
-      const packageJson = JSON.parse(data);
+    // Parse package.json data as JSON
+    const packageJson = JSON.parse(data);
 
-      // Get the version from package.json
-      packageVersion = packageJson.version;
-    } catch (error) {}
-  });
-
-  return packageVersion;
+    packageVersion = packageJson.version;
+  } catch (error) {
+  } finally {
+    return packageVersion;
+  }
 };
 
 module.exports = {
