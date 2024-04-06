@@ -10,8 +10,6 @@ const { getPackageVersion } = require("./getPackageVersion");
 (async () => {
   try {
     const packageVersion = await getPackageVersion();
-
-    // Define the version of your CLI tool
     program.version(packageVersion || "1.0.0");
   } catch (error) {
     console.log(
@@ -61,7 +59,7 @@ const { getPackageVersion } = require("./getPackageVersion");
       }
     });
 
-  // Display help information if no valid command is provided
+  // Adds help information when a valid command is not entered
   program.on("command:*", () => {
     console.error(chalk.red(`Invalid command: ${program.args.join(" ")}`));
     console.log(chalk.yellow("Available commands:"));
@@ -69,6 +67,6 @@ const { getPackageVersion } = require("./getPackageVersion");
     program.help();
   });
 
-  // Parse the command-line arguments
+  // Initiate command line arguments parsing
   program.parse(process.argv);
 })();

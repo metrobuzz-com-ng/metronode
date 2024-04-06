@@ -1,6 +1,5 @@
 const fs = require("fs").promises;
 
-// Define the path to your package.json file
 const packageJsonPath = "./package.json";
 
 const getPackageVersion = async () => {
@@ -9,7 +8,6 @@ const getPackageVersion = async () => {
   try {
     const data = await fs.readFile(packageJsonPath, "utf8");
 
-    // Parse package.json data as JSON
     const packageJson = JSON.parse(data);
 
     packageVersion = packageJson.version;
