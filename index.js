@@ -3,7 +3,7 @@
 const { program } = require("commander");
 const chalk = require("chalk");
 const { spawnSync } = require("child_process");
-const { rmdirSync, rmSync } = require("fs");
+const { rmSync } = require("fs");
 const { join } = require("path");
 const { getPackageVersion } = require("./getPackageVersion");
 
