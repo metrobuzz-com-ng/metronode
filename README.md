@@ -10,7 +10,7 @@ metronode new <<projectname>> --destination <<destination>>
 
 ```
 
-<<projectname>> refers to a unique string to use to name the project you want to create
+`projectname` refers to a unique string to use to name the project you want to create
 
 ### Validation
 
