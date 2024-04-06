@@ -13,6 +13,15 @@ const {
   getPackageVersion,
 } = require("./utils");
 
+const asciiArt = `
+                __                                  .___      
+  _____   _____/  |________  ____   ____   ____   __| _/____  
+ /     \_/ __ \   __\_  __ \/  _ \ /    \ /  _ \ / __ |/ __ \ 
+|  Y Y  \  ___/|  |  |  | \(  <_> )   |  (  <_> ) /_/ \  ___/ 
+|__|_|  /\___  >__|  |__|   \____/|___|  /\____/\____ |\___  >
+      \/     \/                        \/            \/    \/ 
+`;
+
 (async () => {
   try {
     const packageVersion = await getPackageVersion();
@@ -21,6 +30,7 @@ const {
     console.error(chalk.red(constants.ERRORS.PACKAGE_VERSION_RETRIEVAL(error)));
     process.exit(1);
   }
+  console.log(chalk.blue(asciiArt));
 
   program
     .command(`${constants.COMMANDS.NEW} [projectName]`)
@@ -108,6 +118,17 @@ const {
     console.log(chalk.yellow("- new       Create a new project"));
     program.help();
   });
+
+  program
+    .option(
+      constants.EXPECTED_ARGUMENTS.VERBOSE,
+      constants.COMMAND_STREAMS.SHOW_VERBOSE_OUTPUT
+    )
+    .option(
+      constants.EXPECTED_ARGUMENTS.DESTINATION,
+      constants.COMMAND_STREAMS.SPECIFY_DESTINATION,
+      "./"
+    );
 
   // Initiate command line arguments parsing
   program.parse(process.argv);
