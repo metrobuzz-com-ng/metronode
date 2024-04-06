@@ -1,6 +1,6 @@
 {
   "name": "metronode-cli",
-  "version": "0.0.1-beta",
+  "version": "0.0.2",
   "description": "CLI tool for creating node projects quicker",
   "main": "index.js",
   "repository": {
