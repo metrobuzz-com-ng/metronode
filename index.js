@@ -3,30 +3,31 @@
 const { program } = require("commander");
 const chalk = require("chalk");
 const { spawnSync } = require("child_process");
-const { rmdirSync } = require("fs");
+const { rmdirSync, rmSync } = require("fs");
 const { join } = require("path");
+const { getPackageVersion } = require("./getPackageVersion");
+
+const packageVersion = getPackageVersion();
 
 // Define the version of your CLI tool
-program.version("1.0.0");
+program.version(packageVersion || "1.0.0");
 
-// Define the "new" command
 program
   .command("new")
   .description("Create a new project")
-  .requiredOption("--projectname <name>", "Specify the project name")
-  .option("--destination <path>", "Specify the destination directory", "./")
-  .action(({ projectname, destination }) => {
+  .requiredOption("--project-name <name>", "Specify the project name")
+  .requiredOption("--destination <path>", "Specify the destination directory")
+  .action(({ projectName, destination }) => {
     console.log(
-      chalk.green(`Creating new project "${projectname}" at ${destination}`)
+      chalk.green(`Creating new project "${projectName}" at ${destination}`)
     );
 
-    // Use child_process.spawnSync to run external commands
     const result = spawnSync(
       "git",
       [
         "clone",
-        "https://github.com/yourusername/your-template-repo.git",
-        projectname,
+        "https://github.com/metrobuzz-com-ng/nodejs-starter-project.git",
+        projectName,
       ],
       {
         cwd: destination,
@@ -36,19 +37,13 @@ program
 
     if (result.status === 0) {
       console.log(
-        chalk.green(`Project "${projectname}" created successfully!`)
+        chalk.green(`Project "${projectName}" created successfully!`)
       );
 
-      // Remove the .git directory after cloning
-      const projectPath = join(destination, projectname);
-      try {
-        rmdirSync(join(projectPath, ".git"), { recursive: true });
-        console.log(chalk.green(`Removed .git directory from ${projectname}`));
-      } catch (error) {
-        console.error(
-          chalk.red(`Error removing .git directory: ${error.message}`)
-        );
-      }
+      //This will help to remove the git directory of the starter project to enable users to create their own
+      const projectPath = join(destination, projectName);
+
+      rmSync(join(projectPath, ".git"), { recursive: true });
     } else {
       console.error(
         chalk.red(`Error creating project: ${result.error || "Unknown error"}`)
