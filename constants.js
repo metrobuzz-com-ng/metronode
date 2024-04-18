@@ -48,6 +48,33 @@ const constants = {
     INHERIT: "inherit",
     IGNORE: "ignore",
   },
+  AVAILABLE_STARTER_PROJECTS: {
+    NODE_JS: {
+      NO_DATABASE:
+        "https://github.com/metrobuzz-com-ng/nodejs-starter-project.git",
+      MONGO_DB: "",
+      POSTGRE_SQL: "",
+      MY_SQL: "",
+    },
+    REACT_NATIVE: {
+      NO_STYLED_COMPONENTS: "",
+      SHOPIFY_RESTYLE: "",
+    },
+    NEXT_JS: {
+      NO_CSS_PROCESSOR: "",
+      TAILWIND: "",
+      BOOTSTRAP: "",
+      MANTINE: "",
+      MATERIAL_UI: "",
+    },
+    REACT_JS: {
+      NO_CSS_PROCESSOR: "",
+      TAILWIND: "",
+      BOOTSTRAP: "",
+      MANTINE: "",
+      MATERIAL_UI: "",
+    },
+  },
 };
 
 module.exports = {
