@@ -82,8 +82,6 @@ const program = new Command();
         adaptiveNativeCss,
       } = options;
 
-      console.log({ platform });
-
       if (!projectName || !isValidProjectName(projectName)) {
         console.error(chalk.red(constants.ERRORS.INVALID_PROJECT_NAME()));
         program.help();
@@ -121,8 +119,6 @@ const program = new Command();
         if (result.status !== 0) {
           throw new Error(constants.ERRORS.UNABLE_TO_GENERATE(result.error));
         }
-
-        console.log({ baseBranch, destination, database });
 
         const branchCheckout = spawnSync("git", ["checkout", `${baseBranch}`], {
           cwd: projectPath,

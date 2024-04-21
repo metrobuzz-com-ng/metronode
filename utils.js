@@ -149,8 +149,6 @@ const getGitDetails = (
   let baseBranch = "";
   let basePlatform = "node";
 
-  console.log({ baseBranch, basePlatform, databaseType, platform });
-
   if (!platform) {
     console.log(chalk.red("Platform is required and must be a valid string"));
     return program.exit(1);
