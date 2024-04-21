@@ -216,7 +216,7 @@ const getGitDetails = (
       return program.exit(1);
     }
 
-    baseBranch = reactNativeBranches[cssProcessor];
+    baseBranch = reactNativeBranches[nativeCssProcessor];
   }
 
   baseUrl = gitUrls[basePlatform];
