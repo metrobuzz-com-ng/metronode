@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { program } = require("commander");
+const { Command } = require("commander");
 const chalk = require("chalk");
 const { spawnSync } = require("child_process");
 const { rmSync } = require("fs");
@@ -23,6 +23,8 @@ const asciiArt = `
       \/     \/                        \/            \/    \/ 
 `;
 
+const program = new Command();
+
 (async () => {
   try {
     const packageVersion = await getPackageVersion();
@@ -34,8 +36,6 @@ const asciiArt = `
   console.log(chalk.blue(asciiArt));
 
   program
-    .command(`${constants.COMMANDS.NEW} [projectName]`)
-    .description(constants.COMMAND_STREAMS.CREATE_PROJECT)
     .option(
       constants.EXPECTED_ARGUMENTS.DATABASE,
       constants.COMMAND_STREAMS.SPECIFY_DATABASE
@@ -63,8 +63,16 @@ const asciiArt = `
       constants.EXPECTED_ARGUMENTS.ADAPTIVE_NATIVE_CSS,
       constants.COMMAND_STREAMS.SPECIFY_ADAPTIVE_NATIVE_CSS,
       "none"
-    )
-    .action(async (projectName, args) => {
+    );
+
+  program.parse(process.argv);
+
+  const options = program.opts();
+
+  program
+    .command(`${constants.COMMANDS.NEW} [projectName]`)
+    .description(constants.COMMAND_STREAMS.CREATE_PROJECT)
+    .action(async (projectName) => {
       const {
         destination,
         verbose,
@@ -72,8 +80,8 @@ const asciiArt = `
         database,
         adaptiveCss,
         adaptiveNativeCss,
-      } = args;
-      console.log({ args });
+      } = options;
+
       if (!projectName || !isValidProjectName(projectName)) {
         console.error(chalk.red(constants.ERRORS.INVALID_PROJECT_NAME()));
         program.help();
@@ -136,16 +144,16 @@ const asciiArt = `
 
         console.log(chalk.green(constants.LOGS.INSTALLING_DEPENDENCIES()));
 
-        // const installDependencies = spawnSync("npm", ["install"], {
-        //   cwd: projectPath,
-        //   stdio: constants.STDIO.INHERIT,
-        // });
+        const installDependencies = spawnSync("npm", ["install"], {
+          cwd: projectPath,
+          stdio: constants.STDIO.INHERIT,
+        });
 
-        // if (installDependencies.status !== 0) {
-        //   throw new Error(
-        //     constants.ERRORS.UNABLE_TO_INSTALL_DEPS(installDependencies.error)
-        //   );
-        // }
+        if (installDependencies.status !== 0) {
+          throw new Error(
+            constants.ERRORS.UNABLE_TO_INSTALL_DEPS(installDependencies.error)
+          );
+        }
 
         console.log(
           chalk.green(constants.LOGS.CREATING_PROJECT(projectName, destination))
@@ -165,6 +173,5 @@ const asciiArt = `
     program.help();
   });
 
-  // Initiate command line arguments parsing
   program.parse(process.argv);
 })();

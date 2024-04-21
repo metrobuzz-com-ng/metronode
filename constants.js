@@ -47,9 +47,8 @@ const constants = {
     DESTINATION: "--destination <path>",
     PLATFORM: "--platform <node> <reactjs> <nextjs>",
     DATABASE: "-d, --database <type>",
-    ADAPTIVE_CSS:
-      "--adaptiveCss <tailwind> <mantine> <material-ui> <bootstrap>",
-    ADAPTIVE_NATIVE_CSS: "--adaptiveNativeCss <shopify-restyle>",
+    ADAPTIVE_CSS: "--adaptiveCss <processor>",
+    ADAPTIVE_NATIVE_CSS: "--adaptiveNativeCss <processor>",
     VERBOSE: "-v, --verbose",
   },
   COMMANDS: {
