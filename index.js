@@ -165,36 +165,6 @@ const asciiArt = `
     program.help();
   });
 
-  program
-    .option(
-      constants.EXPECTED_ARGUMENTS.VERBOSE,
-      constants.COMMAND_STREAMS.SHOW_VERBOSE_OUTPUT
-    )
-    .option(
-      constants.EXPECTED_ARGUMENTS.PLATFORM,
-      constants.COMMAND_STREAMS.SPECIFY_PLATFORM,
-      "node"
-    )
-    .option(
-      constants.EXPECTED_ARGUMENTS.ADAPTIVE_CSS,
-      constants.COMMAND_STREAMS.SPECIFY_ADAPTIVE_CSS,
-      "none"
-    )
-    .option(
-      constants.EXPECTED_ARGUMENTS.ADAPTIVE_NATIVE_CSS,
-      constants.COMMAND_STREAMS.SPECIFY_ADAPTIVE_NATIVE_CSS,
-      "none"
-    )
-    .option(
-      constants.EXPECTED_ARGUMENTS.DATABASE,
-      constants.COMMAND_STREAMS.SPECIFY_DATABASE
-    )
-    .option(
-      constants.EXPECTED_ARGUMENTS.DESTINATION,
-      constants.COMMAND_STREAMS.SPECIFY_DESTINATION,
-      "./"
-    );
-
   // Initiate command line arguments parsing
   program.parse(process.argv);
 })();

@@ -38,7 +38,7 @@ const constants = {
     SPECIFY_DESTINATION: "Specify the destination directory",
     SHOW_VERBOSE_OUTPUT: "Show verbose output",
     SPECIFY_PLATFORM: "Specify platform",
-    SPECIFY_DATABASE: "Specify database for node backend service",
+    SPECIFY_DATABASE: "Specify database type (e.g posgres)",
     SPECIFY_ADAPTIVE_CSS: "Specify adaptive css type e.g tailwind",
     SPECIFY_ADAPTIVE_NATIVE_CSS:
       "Specify adaptive native css type e.g shopify-restyle",
@@ -46,7 +46,7 @@ const constants = {
   EXPECTED_ARGUMENTS: {
     DESTINATION: "--destination <path>",
     PLATFORM: "--platform <node> <reactjs> <nextjs>",
-    DATABASE: "--db <mysql> <postgresql> <mongodb>",
+    DATABASE: "-d, --database <type>",
     ADAPTIVE_CSS:
       "--adaptiveCss <tailwind> <mantine> <material-ui> <bootstrap>",
     ADAPTIVE_NATIVE_CSS: "--adaptiveNativeCss <shopify-restyle>",
