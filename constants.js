@@ -20,6 +20,8 @@ const constants = {
       `Unable to install dependencies: ${errorMessage}`,
     CREATE_PROJECT_ERROR: (errorMessage) =>
       `Error creating project: ${errorMessage}`,
+    UNABLE_TO_CHECKOUT: (errorMessage) =>
+      `Error finalizing project generation: ${errorMessage}`,
   },
   LOGS: {
     CREATING_PROJECT: (projectName, destination) =>
@@ -35,10 +37,19 @@ const constants = {
     SPECIFY_PROJECT_NAME: "Specify the project name",
     SPECIFY_DESTINATION: "Specify the destination directory",
     SHOW_VERBOSE_OUTPUT: "Show verbose output",
+    SPECIFY_PLATFORM: "Specify platform",
+    SPECIFY_DATABASE: "Specify database for node backend service",
+    SPECIFY_ADAPTIVE_CSS: "Specify adaptive css type e.g tailwind",
+    SPECIFY_ADAPTIVE_NATIVE_CSS:
+      "Specify adaptive native css type e.g shopify-restyle",
   },
   EXPECTED_ARGUMENTS: {
-    PROJECT_NAME: "--project-name <name>",
     DESTINATION: "--destination <path>",
+    PLATFORM: "--platform <node> <reactjs> <nextjs>",
+    DATABASE: "--db <mysql> <postgresql> <mongodb>",
+    ADAPTIVE_CSS:
+      "--adaptiveCss <tailwind> <mantine> <material-ui> <bootstrap>",
+    ADAPTIVE_NATIVE_CSS: "--adaptiveNativeCss <shopify-restyle>",
     VERBOSE: "-v, --verbose",
   },
   COMMANDS: {
@@ -50,29 +61,43 @@ const constants = {
   },
   AVAILABLE_STARTER_PROJECTS: {
     NODE_JS: {
-      NO_DATABASE:
+      BASE_URL:
         "https://github.com/metrobuzz-com-ng/nodejs-starter-project.git",
-      MONGO_DB: "",
-      POSTGRE_SQL: "",
-      MY_SQL: "",
+      BRANCHES: {
+        POSTGRES: "postgres-sequelize",
+        NO_DATABASE: "0.0.1",
+        MONGO_DB: "mongodb-mongoose",
+        MYSQL: "mysql-sequelize",
+      },
     },
     REACT_NATIVE: {
-      NO_STYLED_COMPONENTS: "",
-      SHOPIFY_RESTYLE: "",
+      BASE_URL: "https://github.com/metrobuzz-com-ng/rn-starter-project.git",
+      BRANCHES: {
+        NO_STYLED_COMPONENTS: "0.0.1",
+        SHOPIFY_RESTYLE: "shopify-restyle",
+      },
     },
     NEXT_JS: {
-      NO_CSS_PROCESSOR: "",
-      TAILWIND: "",
-      BOOTSTRAP: "",
-      MANTINE: "",
-      MATERIAL_UI: "",
+      BASE_URL:
+        "https://github.com/metrobuzz-com-ng/nextjs-starter-project.git",
+      BRANCHES: {
+        NO_CSS_PROCESSOR: "0.0.1",
+        TAILWIND: "tailwind",
+        BOOTSTRAP: "bootstrap",
+        MANTINE: "mantine",
+        MATERIAL_UI: "material-ui",
+      },
     },
     REACT_JS: {
-      NO_CSS_PROCESSOR: "",
-      TAILWIND: "",
-      BOOTSTRAP: "",
-      MANTINE: "",
-      MATERIAL_UI: "",
+      BASE_URL:
+        "https://github.com/metrobuzz-com-ng/reactjs-starter-project.git",
+      BRANCHES: {
+        NO_CSS_PROCESSOR: "0.0.1",
+        TAILWIND: "tailwind",
+        BOOTSTRAP: "bootstrap",
+        MANTINE: "mantine",
+        MATERIAL_UI: "material-ui",
+      },
     },
   },
 };

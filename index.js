@@ -11,6 +11,7 @@ const {
   confirmFolderIsUnique,
   updatePackageJson,
   getPackageVersion,
+  getGitDetails,
 } = require("./utils");
 
 const asciiArt = `
@@ -36,15 +37,43 @@ const asciiArt = `
     .command(`${constants.COMMANDS.NEW} [projectName]`)
     .description(constants.COMMAND_STREAMS.CREATE_PROJECT)
     .option(
-      constants.EXPECTED_ARGUMENTS.DESTINATION,
-      constants.COMMAND_STREAMS.SPECIFY_DESTINATION,
-      "./"
+      constants.EXPECTED_ARGUMENTS.DATABASE,
+      constants.COMMAND_STREAMS.SPECIFY_DATABASE
     )
     .option(
       constants.EXPECTED_ARGUMENTS.VERBOSE,
       constants.COMMAND_STREAMS.SHOW_VERBOSE_OUTPUT
     )
-    .action(async (projectName, { destination, verbose }) => {
+    .option(
+      constants.EXPECTED_ARGUMENTS.DESTINATION,
+      constants.COMMAND_STREAMS.SPECIFY_DESTINATION,
+      "./"
+    )
+    .option(
+      constants.EXPECTED_ARGUMENTS.PLATFORM,
+      constants.COMMAND_STREAMS.SPECIFY_PLATFORM,
+      "node"
+    )
+    .option(
+      constants.EXPECTED_ARGUMENTS.ADAPTIVE_CSS,
+      constants.COMMAND_STREAMS.SPECIFY_ADAPTIVE_CSS,
+      "none"
+    )
+    .option(
+      constants.EXPECTED_ARGUMENTS.ADAPTIVE_NATIVE_CSS,
+      constants.COMMAND_STREAMS.SPECIFY_ADAPTIVE_NATIVE_CSS,
+      "none"
+    )
+    .action(async (projectName, args) => {
+      const {
+        destination,
+        verbose,
+        platform,
+        database,
+        adaptiveCss,
+        adaptiveNativeCss,
+      } = args;
+      console.log({ args });
       if (!projectName || !isValidProjectName(projectName)) {
         console.error(chalk.red(constants.ERRORS.INVALID_PROJECT_NAME()));
         program.help();
@@ -66,17 +95,34 @@ const asciiArt = `
       console.log(chalk.blue(constants.LOGS.GENERATING_PROJECT(projectName)));
 
       try {
-        const result = spawnSync(
-          "git",
-          ["clone", constants.DEFAULTS.STARTER_PROJECT_GIT_URL, projectName],
-          {
-            cwd: destination,
-            stdio: verbose ? constants.STDIO.INHERIT : constants.STDIO.IGNORE,
-          }
+        const { baseBranch, baseUrl } = getGitDetails(
+          platform,
+          database,
+          adaptiveCss,
+          adaptiveNativeCss,
+          program
         );
+
+        const result = spawnSync("git", ["clone", baseUrl, projectName], {
+          cwd: destination,
+          stdio: verbose ? constants.STDIO.INHERIT : constants.STDIO.IGNORE,
+        });
 
         if (result.status !== 0) {
           throw new Error(constants.ERRORS.UNABLE_TO_GENERATE(result.error));
+        }
+
+        console.log({ baseBranch, destination, database });
+
+        const branchCheckout = spawnSync("git", ["checkout", `${baseBranch}`], {
+          cwd: projectPath,
+          stdio: verbose ? constants.STDIO.INHERIT : constants.STDIO.IGNORE,
+        });
+
+        if (branchCheckout.status !== 0) {
+          throw new Error(
+            constants.ERRORS.UNABLE_TO_CHECKOUT(branchCheckout.error)
+          );
         }
 
         await updatePackageJson(join(projectPath, "package.json"), {
@@ -90,16 +136,16 @@ const asciiArt = `
 
         console.log(chalk.green(constants.LOGS.INSTALLING_DEPENDENCIES()));
 
-        const installDependencies = spawnSync("npm", ["install"], {
-          cwd: projectPath,
-          stdio: constants.STDIO.INHERIT,
-        });
+        // const installDependencies = spawnSync("npm", ["install"], {
+        //   cwd: projectPath,
+        //   stdio: constants.STDIO.INHERIT,
+        // });
 
-        if (installDependencies.status !== 0) {
-          throw new Error(
-            constants.ERRORS.UNABLE_TO_INSTALL_DEPS(installDependencies.error)
-          );
-        }
+        // if (installDependencies.status !== 0) {
+        //   throw new Error(
+        //     constants.ERRORS.UNABLE_TO_INSTALL_DEPS(installDependencies.error)
+        //   );
+        // }
 
         console.log(
           chalk.green(constants.LOGS.CREATING_PROJECT(projectName, destination))
@@ -123,6 +169,25 @@ const asciiArt = `
     .option(
       constants.EXPECTED_ARGUMENTS.VERBOSE,
       constants.COMMAND_STREAMS.SHOW_VERBOSE_OUTPUT
+    )
+    .option(
+      constants.EXPECTED_ARGUMENTS.PLATFORM,
+      constants.COMMAND_STREAMS.SPECIFY_PLATFORM,
+      "node"
+    )
+    .option(
+      constants.EXPECTED_ARGUMENTS.ADAPTIVE_CSS,
+      constants.COMMAND_STREAMS.SPECIFY_ADAPTIVE_CSS,
+      "none"
+    )
+    .option(
+      constants.EXPECTED_ARGUMENTS.ADAPTIVE_NATIVE_CSS,
+      constants.COMMAND_STREAMS.SPECIFY_ADAPTIVE_NATIVE_CSS,
+      "none"
+    )
+    .option(
+      constants.EXPECTED_ARGUMENTS.DATABASE,
+      constants.COMMAND_STREAMS.SPECIFY_DATABASE
     )
     .option(
       constants.EXPECTED_ARGUMENTS.DESTINATION,

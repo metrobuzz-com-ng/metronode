@@ -1,6 +1,6 @@
 {
   "name": "@metrobuzz/cli",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "CLI tool for creating node projects quicker",
   "main": "index.js",
   "repository": {
