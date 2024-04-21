@@ -91,20 +91,20 @@ const validateWebCssProcessor = (processor) => {
     "none",
   ];
 
-  return validProcessor.includes(platform);
+  return validProcessor.includes(processor);
 };
 
 const validateNativeCssProcessor = (processor) => {
   const validProcessor = ["shopify-restyle", "none"];
 
-  return validProcessor.includes(platform);
+  return validProcessor.includes(processor);
 };
 
 const gitUrls = {
   node: constants.AVAILABLE_STARTER_PROJECTS.NODE_JS.BASE_URL,
   reactjs: constants.AVAILABLE_STARTER_PROJECTS.REACT_JS.BASE_URL,
   nextjs: constants.AVAILABLE_STARTER_PROJECTS.NEXT_JS.BASE_URL,
-  reactNative: constants.AVAILABLE_STARTER_PROJECTS.REACT_NATIVE.BASE_URL,
+  "react-native": constants.AVAILABLE_STARTER_PROJECTS.REACT_NATIVE.BASE_URL,
 };
 
 const nodeDatabaseBranches = {
@@ -149,7 +149,7 @@ const getGitDetails = (
   let baseBranch = "";
   let basePlatform = "node";
 
-  console.log({ baseBranch, basePlatform, databaseType });
+  console.log({ baseBranch, basePlatform, databaseType, platform });
 
   if (!platform) {
     console.log(chalk.red("Platform is required and must be a valid string"));
@@ -179,8 +179,6 @@ const getGitDetails = (
 
     baseBranch = nodeDatabaseBranches[databaseType];
   }
-
-  console.log({ baseBranch });
 
   if (basePlatform === "reactjs") {
     if (!validateWebCssProcessor(cssProcessor)) {

@@ -82,6 +82,8 @@ const program = new Command();
         adaptiveNativeCss,
       } = options;
 
+      console.log({ platform });
+
       if (!projectName || !isValidProjectName(projectName)) {
         console.error(chalk.red(constants.ERRORS.INVALID_PROJECT_NAME()));
         program.help();
@@ -108,7 +110,7 @@ const program = new Command();
           database,
           adaptiveCss,
           adaptiveNativeCss,
-          program
+          process
         );
 
         const result = spawnSync("git", ["clone", baseUrl, projectName], {
@@ -146,7 +148,7 @@ const program = new Command();
 
         const installDependencies = spawnSync("npm", ["install"], {
           cwd: projectPath,
-          stdio: constants.STDIO.INHERIT,
+          stdio: verbose ? constants.STDIO.INHERIT : constants.STDIO.IGNORE,
         });
 
         if (installDependencies.status !== 0) {
