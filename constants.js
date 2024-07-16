@@ -70,7 +70,8 @@ const constants = {
       },
     },
     REACT_NATIVE: {
-      BASE_URL: "https://github.com/metrobuzz-com-ng/rn-starter-project.git",
+      BASE_URL:
+        "https://github.com/metrobuzz-com-ng/react-native-starter-project.git",
       BRANCHES: {
         NO_STYLED_COMPONENTS: "0.0.1",
         SHOPIFY_RESTYLE: "shopify-restyle",

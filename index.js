@@ -13,6 +13,7 @@ const {
   getPackageVersion,
   getGitDetails,
 } = require("./utils");
+const { intializeRNProject } = require("./react-native");
 
 const asciiArt = `
                 __                                  .___      
@@ -103,6 +104,10 @@ const program = new Command();
       console.log(chalk.blue(constants.LOGS.GENERATING_PROJECT(projectName)));
 
       try {
+        if (platform === "react-native") {
+          intializeRNProject({ process, verbose, destination, projectName });
+        }
+
         const { baseBranch, baseUrl } = getGitDetails(
           platform,
           database,
